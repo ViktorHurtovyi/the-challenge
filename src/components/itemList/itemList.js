@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import "./items.css"
-import List from "./list"
+import Item from "../item"
 
 const ItemList = () => {
     const items = useSelector((state) => state.items.items)
@@ -33,24 +33,7 @@ const ItemList = () => {
         setItems(tree)
     }
 
-    const cycle = (child) => {
-        return (
-            <ul className="element">
-                {child.map((item) => {
-                    return (
-                        <div key={item.id}>
-                            <li>
-                                <span>{item.label}</span>
-                            </li>
-                            {item.children ? cycle(item.children) : ""}
-                        </div>
-                    )
-                })}
-            </ul>
-        )
-    }
-
-   return <List items={items} sortedItems={cycle(itemList)}/>
+   return <Item items={items} sortedItems={itemList} />
 
 }
 
