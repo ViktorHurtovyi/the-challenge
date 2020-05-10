@@ -5,7 +5,7 @@ const Item = ({items, sortedItems}) => {
 
     const cycle = (child) => {
         return (
-            <ul className="element">
+            <ul className="element" data-testid="list-sorted">
                 {child.map((item) => {
                     return (
                         <div key={item.id}>
@@ -28,8 +28,8 @@ const Item = ({items, sortedItems}) => {
                 {cycle(sortedItems)}
             </div>
             <div className="items">
-                <ul>
-                    <h2>Default</h2>
+                <h2>Default</h2>
+                <ul data-testid="list-default">
                     {items.map((item) => (
                         <li key={item.id}>{item.label}</li>
                     ))}

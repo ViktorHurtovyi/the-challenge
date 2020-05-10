@@ -7,14 +7,21 @@
     "build": "nwb build-react-app",
     "clean": "nwb clean-app",
     "start": "nwb serve-react-app",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "react-scripts test"
   },
   "dependencies": {
-    "react": "^16.8.6",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.12.0",
+    "prop-types": "^15.7.2",
     "react-dom": "^16.13.1",
     "react-redux": "7.2.0",
     "redux": "4.0.5",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react-scripts": "3.3.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "eslint-plugin-react-hooks": "^4.0.0",
