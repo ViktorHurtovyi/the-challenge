@@ -4,7 +4,7 @@ const initialState = {
   error: false,
 }
 
-export function items(state = initialState, action) {
+export const items = (state = initialState, action) => {
   switch (action.type) {
     case "ITEMS_FETCH_DATA_SUCCESS":
       return { ...state, items: action.items, loading: false, error: false }
@@ -15,4 +15,23 @@ export function items(state = initialState, action) {
     default:
       return state
   }
+}
+
+export const sortItems = (state) => {
+  const tree = []
+  const arrayWithChildren = []
+
+  state.items.items.map((item) => {
+    arrayWithChildren[item.id] = item
+    arrayWithChildren[item.id].children = []
+  })
+
+  arrayWithChildren.map((item) => {
+    if (item.parent_id) {
+      arrayWithChildren[item.parent_id].children.push(item)
+    } else {
+      tree.push(item)
+    }
+  })
+  return tree;
 }

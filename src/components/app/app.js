@@ -1,11 +1,15 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import "./app.css"
+import ItemList from "../itemList"
+import {sortItems} from "../../reducers/items";
+import {itemsFetchData} from "../../actions/items";
 import Error from "../error";
 import Spinner from "../spinner";
-import ItemList from "../itemList/itemList";
-import {itemsFetchData} from "../../actions/items";
 
 const App = () => {
+    const items = useSelector((state) => state.items.items)
+    const sortedItems = useSelector((state) => sortItems(state))
 
     const loading = useSelector((state) => state.items.loading)
     const error = useSelector((state) => state.items.error)
@@ -22,9 +26,11 @@ const App = () => {
             return <Error/>
         if (loading === true)
             return <Spinner/>
-        else return <ItemList />
+        else return <ItemList items={items} sortedItems={sortedItems} />
     }
 
     return showItem();
+
 }
-export default App;
+
+export default App

@@ -1,40 +1,48 @@
-import React, {useEffect, useState} from "react"
-import {useSelector} from "react-redux"
-import "./items.css"
-import Item from "../item"
+import React from "react"
+import PropTypes from 'prop-types';
 
-const ItemList = () => {
-    const items = useSelector((state) => state.items.items)
+const ItemList = ({items, sortedItems}) => {
 
-    const [itemList, setItems] = useState([])
-
-    useEffect(() => {
-        sortItems()
-    }, [items])
-
-
-    const sortItems = () => {
-        const tree = []
-        const arrayWithChildren = []
-
-        items.map((item) => {
-            arrayWithChildren[item.id] = item
-            arrayWithChildren[item.id].children = []
-        })
-
-        arrayWithChildren.map((item) => {
-            if (item.parent_id) {
-                arrayWithChildren[item.parent_id].children.push(item)
-            } else {
-                tree.push(item)
-            }
-        })
-
-        setItems(tree)
+    const cycle = (child) => {
+        return (
+            <ul className="element" data-testid="list-sorted">
+                {child.map((item) => {
+                    return (
+                        <div key={item.id}>
+                            <li>
+                                <span>{item.label}</span>
+                            </li>
+                            {item.children ? cycle(item.children) : ""}
+                        </div>
+                    )
+                })}
+            </ul>
+        )
     }
 
-   return <Item items={items} sortedItems={itemList} />
 
-}
+    return (
+        <div className="list">
+            <div className="items">
+                <h2>Sorted</h2>
+                {cycle(sortedItems)}
+            </div>
+            <div className="items">
+                <h2>Default</h2>
+                <ul data-testid="list-default">
+                    {items.map((item) => (
+                        <li key={item.id}>{item.label}</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    )
+};
 
-export default ItemList
+ItemList.propTypes = {
+    items: PropTypes.array.isRequired,
+    sortedItems: PropTypes.array.isRequired,
+};
+
+
+export default ItemList;
