@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './app.css';
 import ItemList from '../itemList';
 import { sortItems } from '../../reducers/items';
-import { itemsFetchData } from '../../actions/items';
+import { loadData } from '../../actions/items';
 import Error from '../error';
 import Spinner from '../spinner';
 
@@ -11,7 +11,7 @@ const App = ({
   fetchData, loading, error, items, sortedItems,
 }) => {
   useEffect(() => {
-    fetchData('http://5af1eee530f9490014ead8c4.mockapi.io/items');
+    fetchData();
   }, []);
 
   const showItem = () => {
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchData: (url) => dispatch(itemsFetchData(url)),
+  fetchData: () => dispatch(loadData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

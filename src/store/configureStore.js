@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
+import watchLoadData from '../redux-saga/sagas';
 
 export default function configureStore(initialState) {
-  return createStore(rootReducer, initialState, applyMiddleware(thunk));
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(rootReducer, initialState, applyMiddleware(sagaMiddleware));
+  sagaMiddleware.run(watchLoadData);
+  return store;
 }
