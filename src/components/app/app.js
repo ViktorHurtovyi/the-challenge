@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import './app.css';
 import ItemList from '../itemList';
 import { sortItems } from '../../reducers/items';
@@ -7,19 +7,12 @@ import { itemsFetchData } from '../../actions/items';
 import Error from '../error';
 import Spinner from '../spinner';
 
-const App = () => {
-  const items = useSelector((state) => state.items.items);
-  const sortedItems = useSelector((state) => sortItems(state));
-
-  const loading = useSelector((state) => state.items.loading);
-  const error = useSelector((state) => state.items.error);
-  const dispatch = useDispatch();
-
+const App = ({
+  fetchData, loading, error, items, sortedItems,
+}) => {
   useEffect(() => {
-    dispatch(
-      itemsFetchData('http://5af1eee530f9490014ead8c4.mockapi.io/items'),
-    );
-  }, [dispatch]);
+    fetchData('http://5af1eee530f9490014ead8c4.mockapi.io/items');
+  }, []);
 
   const showItem = () => {
     if (error === true) { return <Error />; }
@@ -30,4 +23,16 @@ const App = () => {
   return showItem();
 };
 
-export default App;
+
+const mapStateToProps = (state) => ({
+  items: state.items.items,
+  sortedItems: sortItems(state),
+  loading: state.items.loading,
+  error: state.items.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: (url) => dispatch(itemsFetchData(url)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

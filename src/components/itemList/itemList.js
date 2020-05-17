@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ItemList = ({ items, sortedItems }) => {
+const ItemList = React.memo(({ items, sortedItems }) => {
   const cycle = (child) => (
     <ul className="element" data-testid="list-sorted">
       {child.map((item) => (
@@ -32,7 +32,7 @@ const ItemList = ({ items, sortedItems }) => {
       </div>
     </div>
   );
-};
+});
 
 ItemList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
